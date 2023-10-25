@@ -1,0 +1,47 @@
+<br><br><br>
+<div class="container mt-2">
+  <ng-container *ngIf="customers |async as listCustomers;">
+    <div style="text-align: center" class="card" *ngIf="customers">
+      <div class="card-header">
+        Manage all Customers
+      </div>
+      <div style="text-align: center" class="card-body">
+        <form [formGroup]="searchFormGroup" (ngSubmit)="searchCustomers()">
+          <div class="input-group">
+            <label class="input-group-text">Keyword </label>
+            <input type="text" formControlName="keyword" class="form-control">
+            <button class="btn btn-info">Search</button>
+          </div>
+        </form>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let c of listCustomers.customerDTO">
+            <td>{{c.id}}</td>
+            <td>{{c.name}}</td>
+            <td>{{c.email}}</td>
+            <td>
+              &nbsp;&nbsp;&nbsp; <button (click)="handleDeleteButton(c)" style="margin-right: 8px" class="btn btn-danger">Delete Customer</button>
+              <button (click)="goToUpdateCustomer(c)" class="btn btn-success" style="margin-right: 8px">Update Customer</button>
+              <button (click)="handleCustomerAccounts(c)" class="btn btn-dark" style="margin-right: 8px">Show Accounts</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <ul class="nav nav-pills">
+          <li *ngFor="let item of [].constructor(listCustomers.totalpage);let page=index">
+            <a [ngClass]="page==currentPage?'btn-info':'btn-outline-info'" (click)="gotoPage(page)"
+               class="btn ms-1 ">{{page}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </ng-container>
+</div>
